@@ -35,8 +35,14 @@ class loginscreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: TextFormField(
+                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
-                    labelText: 'Email Address', fillColor: Colors.grey),
+                  labelText: 'Email Address',
+                  fillColor: Colors.grey,
+                  suffix: Icon(
+                    Icons.remove_red_eye,
+                  ),
+                ),
                 style: TextStyle(
                   color: Colors.grey,
                 ),
@@ -55,8 +61,15 @@ class loginscreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: TextFormField(
+                obscureText: true,
+                keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
-                    labelText: 'Password', fillColor: Colors.grey),
+                  labelText: 'Password',
+                  fillColor: Colors.grey,
+                  suffixIcon: Icon(
+                    Icons.remove_red_eye,
+                  ),
+                ),
                 style: TextStyle(
                   color: Colors.grey,
                 ),
