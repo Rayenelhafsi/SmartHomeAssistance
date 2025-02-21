@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class loginscreen extends StatelessWidget {
+  const loginscreen({super.key});
+
   // const MyWidget({super.key});
 
   @override
@@ -39,8 +41,8 @@ class loginscreen extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Email Address',
                   fillColor: Colors.grey,
-                  suffix: Icon(
-                    Icons.remove_red_eye,
+                  suffixIcon: Icon(
+                    Icons.mail,
                   ),
                 ),
                 style: TextStyle(
