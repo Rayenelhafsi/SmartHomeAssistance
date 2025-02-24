@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "491122931834",
-    "project_id": "smarthome-e30cf",
-    "storage_bucket": "smarthome-e30cf.firebasestorage.app"
+    "project_number": "42087615644",
+    "project_id": "auth-firebase-7a66e",
+    "storage_bucket": "auth-firebase-7a66e.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:491122931834:android:f7eb79069a70afd6efe3c3",
+        "mobilesdk_app_id": "1:42087615644:android:4cb4a130e6c84bf4187159",
         "android_client_info": {
-          "package_name": "com.example.project"
+          "package_name": "com.example.authfirebase"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB3CJgcxfQ-a6p6xneDyOy8RwZGuAOLPKg"
+          "current_key": "AIzaSyBjHFIwnf7BO59QglVFmmrBauJko4bUi0E"
         }
       ],
       "services": {

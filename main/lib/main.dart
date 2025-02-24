@@ -5,23 +5,16 @@ import 'package:project/screen/login.dart';
 
 import 'firebase_options.dart';
 
-void main() async
-{
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
 
-
-class MyApp extends StatelessWidget
-{
- 
+class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context)
-  {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: login(),
-    );
+  Widget build(BuildContext context) {
+    return MaterialApp(debugShowCheckedModeBanner: false, home: login());
   }
 }
