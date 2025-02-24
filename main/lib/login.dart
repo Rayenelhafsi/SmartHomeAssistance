@@ -1,134 +1,166 @@
 import 'package:flutter/material.dart';
+import 'package:project/signup.dart';
 
-class loginscreen extends StatelessWidget {
-  const loginscreen({super.key});
+// ignore: must_be_immutable
+class login extends StatefulWidget {
+  @override
+  State<login> createState() => _loginState();
+}
 
-  // const MyWidget({super.key});
+class _loginState extends State<login> {
+  var emailController = TextEditingController();
+
+  var passwordController = TextEditingController();
+
+  bool showpass=true;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: 250,
-          ),
-          Center(
-            child: Container(
-              child: Text(
-                'Login',
-                style: TextStyle(
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  fontWeight: FontWeight.w900,
-                  fontSize: 40,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: 'Email Address',
-                  fillColor: Colors.grey,
-                  suffixIcon: Icon(
-                    Icons.mail,
-                  ),
-                ),
-                style: TextStyle(
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TextFormField(
-                obscureText: true,
-                keyboardType: TextInputType.visiblePassword,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  fillColor: Colors.grey,
-                  suffixIcon: Icon(
-                    Icons.remove_red_eye,
-                  ),
-                ),
-                style: TextStyle(
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                child: GestureDetector(
-                  onTap: () {
-                    print('Link Clicked');
-                  },
-                  child: Text(
-                    'Forgot Password ?',
-                    style: TextStyle(
-                      color: Colors.white,
-                      decoration: TextDecoration.underline,
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 60.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-              ),
-              SizedBox(
-                width: 80,
-              ),
-              Container(
-                child: GestureDetector(
-                  onTap: () {
-                    print('Link Clicked');
-                  },
-                  child: Text(
-                    'Sign Up ?',
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Column(
+                    children: [
+                      Image(
+                        image: AssetImage(
+                          'images/logo-test.png',
+                        ),
+                        height: 90,
+                        width: 90,
+                        ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 40.0,
+                  ),
+                  TextFormField(
                     style: TextStyle(
                       color: Colors.white,
-                      decoration: TextDecoration.underline,
+                    ),
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    onFieldSubmitted: (String value) {
+                      print(value);
+                    },
+                    onChanged: (String value) {
+                      print(value);
+                    },
+                    decoration: InputDecoration(
+                      hintStyle: TextStyle(
+                        color: const Color.fromARGB(38, 170, 144, 144),
+                      ),
+                      labelText: 'Email Address',
+                      prefixIcon: Icon(
+                        Icons.email,
+                      ),
+                      border: OutlineInputBorder(),
                     ),
                   ),
-                ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  TextFormField(
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                    controller: passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: showpass,
+                    onFieldSubmitted: (String value) {
+                      print(value);
+                    },
+                    onChanged: (String value) {
+                      print(value);
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      prefixIcon: Icon(
+                        Icons.lock,
+                      ),
+                      suffixIcon: IconButton(
+                          icon: Icon(
+                            Icons.remove_red_eye,
+                          ),
+                          onPressed: (){
+                            setState(() {
+                              showpass=!showpass;
+                            });
+                          },
+                        ),
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    color: Colors.purple,
+                    child: MaterialButton(
+                      onPressed: () {
+                        print(emailController.text);
+                        print(passwordController.text);
+                      },
+                      child: Text(
+                        'LOGIN',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        'Don\'t have an account?',
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context, 
+                            MaterialPageRoute(builder: (context)=> signup())
+                            );
+                        },
+                        child: Text(
+                          'Register Now',
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.login,
             ),
           ),
-        ],
+        ),
+        backgroundColor: Color(0xFF0D0F1E), // Dark theme background
+      
       ),
-      backgroundColor: const Color.fromARGB(255, 22, 0, 39),
     );
   }
 }

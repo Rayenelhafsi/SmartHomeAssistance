@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:main/signup.dart';
-// import 'package:main/signup.dart';
+import 'package:project/login.dart';
 
-void main() {
-  runApp(SmartHomeApp());
+void main()
+{
+  runApp(MyApp());
 }
 
-class SmartHomeApp extends StatelessWidget {
-  const SmartHomeApp({super.key});
 
+class MyApp extends StatelessWidget
+{
+ 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: signup(),
+      home: login(),
     );
   }
 }
