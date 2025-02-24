@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "491122931834",
+    "project_id": "smarthome-e30cf",
+    "storage_bucket": "smarthome-e30cf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:491122931834:android:f7eb79069a70afd6efe3c3",
+        "android_client_info": {
+          "package_name": "com.example.project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3CJgcxfQ-a6p6xneDyOy8RwZGuAOLPKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
