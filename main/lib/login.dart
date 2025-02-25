@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:project/auth_service.dart';
 import 'package:project/signup.dart';
 
-// ignore: must_be_immutable
-class login extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  State<login> createState() => _loginState();
+  State<Login> createState() => _LoginState();
 }
 
-class _loginState extends State<login> {
-  var emailController = TextEditingController();
-
-  var passwordController = TextEditingController();
-
-  bool showpass=true;
+class _LoginState extends State<Login> {
+  final AuthService _authService = AuthService();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool showpass = true;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,6 @@ class _loginState extends State<login> {
           child: Center(
             child: SingleChildScrollView(
               child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
                     child: Text(
@@ -35,83 +34,60 @@ class _loginState extends State<login> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 40,
+                  SizedBox(height: 40),
+                  Image(
+                    image: AssetImage('images/logo-test.png'),
+                    height: 90,
+                    width: 90,
                   ),
-                  Column(
-                    children: [
-                      Image(
-                        image: AssetImage(
-                          'images/logo-test.png',
-                        ),
-                        height: 90,
-                        width: 90,
-                        ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 40.0,
-                  ),
+                  SizedBox(height: 40.0),
                   TextFormField(
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                    style: TextStyle(color: Colors.white),
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
-                    onFieldSubmitted: (String value) {
-                      print(value);
-                    },
-                    onChanged: (String value) {
-                      print(value);
-                    },
                     decoration: InputDecoration(
                       hintStyle: TextStyle(
                         color: const Color.fromARGB(38, 170, 144, 144),
                       ),
                       labelText: 'Email Address',
-                      prefixIcon: Icon(
-                        Icons.email,
-                      ),
+                      prefixIcon: Icon(Icons.email),
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(
-                    height: 15.0,
-                  ),
+                  SizedBox(height: 15.0),
                   TextFormField(
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                    style: TextStyle(color: Colors.white),
                     controller: passwordController,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: showpass,
-                    onFieldSubmitted: (String value) {
-                      print(value);
-                    },
-                    onChanged: (String value) {
-                      print(value);
-                    },
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      prefixIcon: Icon(
-                        Icons.lock,
-                      ),
+                      prefixIcon: Icon(Icons.lock),
                       suffixIcon: IconButton(
-                          icon: Icon(
-                            Icons.remove_red_eye,
-                          ),
-                          onPressed: (){
-                            setState(() {
-                              showpass=!showpass;
-                            });
-                          },
-                        ),
+                        icon: Icon(Icons.remove_red_eye),
+                        onPressed: () {
+                          setState(() {
+                            showpass = !showpass;
+                          });
+                        },
+                      ),
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(
-                    height: 20.0,
+                  SizedBox(height: 25.0),
+                  ElevatedButton(
+                    onPressed: () async {
+                      User? user = await _authService.signInWithGoogle();
+                      if (user != null) {
+                        print('User signed in: ${user.displayName}');
+                      } else {
+                        print('Sign-in failed');
+                      }
+                    },
+
+                    child: Text('Sign in with Google'),
                   ),
+                  SizedBox(height: 25.0),
                   Container(
                     width: double.infinity,
                     color: Colors.purple,
@@ -122,34 +98,26 @@ class _loginState extends State<login> {
                       },
                       child: Text(
                         'LOGIN',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
+                  SizedBox(height: 20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
                         'Don\'t have an account?',
+                        style: TextStyle(color: Colors.white),
                       ),
                       TextButton(
                         onPressed: () {
                           Navigator.push(
-                            context, 
-                            MaterialPageRoute(builder: (context)=> signup())
-                            );
+                            context,
+                            MaterialPageRoute(builder: (context) => Signup()),
+                          );
                         },
-                        child: Text(
-                          'Register Now',
-                        ),
+                        child: Text('Register Now'),
                       ),
                     ],
                   ),
@@ -159,7 +127,6 @@ class _loginState extends State<login> {
           ),
         ),
         backgroundColor: Color(0xFF0D0F1E), // Dark theme background
-      
       ),
     );
   }

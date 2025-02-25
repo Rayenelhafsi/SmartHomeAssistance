@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class signup extends StatefulWidget {  // Change to StatefulWidget
+class Signup extends StatefulWidget {
   @override
   _SignupState createState() => _SignupState();
 }
 
-class _SignupState extends State<signup> {  // Create the State class
-
+class _SignupState extends State<Signup> {
   var emailController = TextEditingController();
   var namecontroller = TextEditingController();
   var lastnamecontroller = TextEditingController();
   var phonecontroller = TextEditingController();
   var passwordController = TextEditingController();
   bool isCheckedchild = false;
-  bool isCheckedparent=false;
-  bool showpass=true;
+  bool isCheckedparent = false;
+  bool showpass = true;
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +27,9 @@ class _SignupState extends State<signup> {  // Create the State class
               Navigator.pop(context);
             },
             icon: Icon(Icons.arrow_back_ios),
-         ),
-  backgroundColor: Color(0xFF0D0F1E),
+          ),
+          backgroundColor: Color(0xFF0D0F1E),
         ),
-
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -46,231 +44,105 @@ class _SignupState extends State<signup> {  // Create the State class
                       fontSize: 60,
                     ),
                   ),
-                  SizedBox(
-                    height: 10
-                    ),
+                  SizedBox(height: 10),
                   Text(
                     'Let\'s start your free trial',
-                    style: TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    style: TextStyle(color: Colors.white),
+                    controller: lastnamecontroller,
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      hintStyle: TextStyle(
+                        color: const Color.fromARGB(38, 170, 144, 144),
+                      ),
+                      labelText: 'Your Last Name',
+                      prefixIcon: Icon(Icons.person),
+                      border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(
-                    height: 20
+                  SizedBox(height: 20),
+                  TextFormField(
+                    style: TextStyle(color: Colors.white),
+                    controller: namecontroller,
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      hintStyle: TextStyle(
+                        color: const Color.fromARGB(38, 170, 144, 144),
+                      ),
+                      labelText: 'Your Name',
+                      prefixIcon: Icon(Icons.person),
+                      border: OutlineInputBorder(),
                     ),
-                  SizedBox(
-                    height: 20,
                   ),
+                  SizedBox(height: 20),
                   TextFormField(
-                      style: TextStyle(
-                        color: Colors.white,
+                    style: TextStyle(color: Colors.white),
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      hintStyle: TextStyle(
+                        color: const Color.fromARGB(38, 170, 144, 144),
                       ),
-                      controller: lastnamecontroller,
-                      keyboardType: TextInputType.name,
-                      onFieldSubmitted: (String value) {
-                        print(value);
-                      },
-                      onChanged: (String value) {
-                        print(value);
-                      },
-                      decoration: InputDecoration(
-                        hintStyle: TextStyle(
-                          color: const Color.fromARGB(38, 170, 144, 144),
-                        ),
-                        labelText: 'Your Last Name',
-                        prefixIcon: Icon(
-                          Icons.person,
-                        ),
-                        border: OutlineInputBorder(),
-                      ),
+                      labelText: 'Email Address',
+                      prefixIcon: Icon(Icons.email),
+                      border: OutlineInputBorder(),
                     ),
-                  SizedBox(
-                    height: 20,
-                    ),
-                  TextFormField(
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                      controller: namecontroller,
-                      keyboardType: TextInputType.name,
-                      onFieldSubmitted: (String value) {
-                        print(value);
-                      },
-                      onChanged: (String value) {
-                        print(value);
-                      },
-                      decoration: InputDecoration(
-                        hintStyle: TextStyle(
-                          color: const Color.fromARGB(38, 170, 144, 144),
-                        ),
-                        labelText: 'Your Name',
-                        prefixIcon: Icon(
-                          Icons.person,
-                        ),
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  SizedBox(
-                    height: 20,
-                    ),
-                  TextFormField(
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                      controller: emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      onFieldSubmitted: (String value) {
-                        print(value);
-                      },
-                      onChanged: (String value) {
-                        print(value);
-                      },
-                      decoration: InputDecoration(
-                        hintStyle: TextStyle(
-                          color: const Color.fromARGB(38, 170, 144, 144),
-                        ),
-                        labelText: 'Email Address',
-                        prefixIcon: Icon(
-                          Icons.email,
-                        ),
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  SizedBox(
-                    height: 20,
-                    ),
-                  TextFormField(
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                      controller: phonecontroller,
-                      keyboardType: TextInputType.phone,
-                      onFieldSubmitted: (String value) {
-                        print(value);
-                      },
-                      onChanged: (String value) {
-                        print(value);
-                      },
-                      decoration: InputDecoration(
-                        hintStyle: TextStyle(
-                          color: const Color.fromARGB(38, 170, 144, 144),
-                        ),
-                        labelText: 'Your Phone number',
-                        prefixIcon: Icon(
-                          Icons.phone,
-                        ),
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  SizedBox(
-                    height: 20,
-                    ),
-                  TextFormField(
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                      controller: passwordController,
-                      keyboardType: TextInputType.visiblePassword,
-                      obscureText: showpass,
-                      onFieldSubmitted: (String value) {
-                        print(value);
-                      },
-                      onChanged: (String value) {
-                        print(value);
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        prefixIcon: Icon(
-                          Icons.lock,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            Icons.remove_red_eye,
-                          ),
-                          onPressed: (){
-                            setState(() {
-                              showpass=!showpass;
-                            });
-                          },
-                        ),
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  SizedBox(
-                    height: 20
-                    ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Checkbox(
-                        value: isCheckedparent,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            isCheckedparent = value!;
-                          });
-                        },
-                      ),
-                      Text(
-                        isCheckedparent ? "Parent" : "Parent",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                        ),
-                      SizedBox(
-                        width: 60,
-                      ),
-                      Checkbox(
-                        value: isCheckedchild,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            isCheckedchild = value!;
-                          });
-                        },
-                      ),
-                      Text(
-                        isCheckedchild ? "Child" : "Child",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                        ),
-                    ],
                   ),
-                  SizedBox(
-                    height: 10,
+                  SizedBox(height: 20),
+                  TextFormField(
+                    style: TextStyle(color: Colors.white),
+                    controller: phonecontroller,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      hintStyle: TextStyle(
+                        color: const Color.fromARGB(38, 170, 144, 144),
+                      ),
+                      labelText: 'Your Phone number',
+                      prefixIcon: Icon(Icons.phone),
+                      border: OutlineInputBorder(),
+                    ),
                   ),
-                  Column(
-                      children: [
-                        Image(
-                          image: AssetImage(
-                            'images/logo-test.png',
-                          ),
-                          height: 90,
-                          width: 90,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                        Container(
-                      width: double.infinity,
-                      color: Colors.purple,
-                      child: MaterialButton(
+                  SizedBox(height: 20),
+                  TextFormField(
+                    style: TextStyle(color: Colors.white),
+                    controller: passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: showpass,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      prefixIcon: Icon(Icons.lock),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.remove_red_eye),
                         onPressed: () {
-                          print(emailController.text);
-                          print(passwordController.text);
-                          print(namecontroller.text);
-                          print(phonecontroller.text);
-                          print(lastnamecontroller.text);
+                          setState(() {
+                            showpass = !showpass;
+                          });
                         },
-                        child: Text(
-                          'SIGN UP',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
                       ),
-                    ),                  
-                    ],
+                      border: OutlineInputBorder(),
                     ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    width: double.infinity,
+                    color: Colors.purple,
+                    child: MaterialButton(
+                      onPressed: () {
+                        print(emailController.text);
+                        print(passwordController.text);
+                        print(namecontroller.text);
+                        print(phonecontroller.text);
+                        print(lastnamecontroller.text);
+                      },
+                      child: Text(
+                        'SIGN UP',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
