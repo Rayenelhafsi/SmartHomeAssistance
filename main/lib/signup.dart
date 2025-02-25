@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:project/auth_service.dart'; // Ensure this import is present
 
 // ignore: must_be_immutable
 class Signup extends StatefulWidget {
@@ -7,13 +9,12 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  final AuthService _authService = AuthService(); // Initialize AuthService
   var emailController = TextEditingController();
   var namecontroller = TextEditingController();
   var lastnamecontroller = TextEditingController();
   var phonecontroller = TextEditingController();
   var passwordController = TextEditingController();
-  bool isCheckedchild = false;
-  bool isCheckedparent = false;
   bool showpass = true;
 
   @override
@@ -130,12 +131,18 @@ class _SignupState extends State<Signup> {
                     width: double.infinity,
                     color: Colors.purple,
                     child: MaterialButton(
-                      onPressed: () {
-                        print(emailController.text);
-                        print(passwordController.text);
-                        print(namecontroller.text);
-                        print(phonecontroller.text);
-                        print(lastnamecontroller.text);
+                      onPressed: () async {
+                        User? user = await _authService
+                            .signUpWithEmailAndPassword(
+                              emailController.text,
+                              passwordController.text,
+                            );
+                        if (user != null) {
+                          print('User registered: ${user.email}');
+                          // Optionally navigate to login or home screen
+                        } else {
+                          print('Sign-up failed');
+                        }
                       },
                       child: Text(
                         'SIGN UP',

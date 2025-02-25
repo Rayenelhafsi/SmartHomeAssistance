@@ -84,7 +84,6 @@ class _LoginState extends State<Login> {
                         print('Sign-in failed');
                       }
                     },
-
                     child: Text('Sign in with Google'),
                   ),
                   SizedBox(height: 25.0),
@@ -92,14 +91,33 @@ class _LoginState extends State<Login> {
                     width: double.infinity,
                     color: Colors.purple,
                     child: MaterialButton(
-                      onPressed: () {
-                        print(emailController.text);
-                        print(passwordController.text);
+                      onPressed: () async {
+                        User? user = await _authService
+                            .signInWithEmailAndPassword(
+                              emailController.text,
+                              passwordController.text,
+                            );
+                        if (user != null) {
+                          print('User signed in: ${user.displayName}');
+                        } else {
+                          print('Sign-in failed');
+                        }
                       },
                       child: Text(
                         'LOGIN',
                         style: TextStyle(color: Colors.white),
                       ),
+                    ),
+                  ),
+                  SizedBox(height: 20.0),
+                  TextButton(
+                    onPressed: () async {
+                      await _authService.resetPassword(emailController.text);
+                      print('Password reset email sent.');
+                    },
+                    child: Text(
+                      'Forgot Password?',
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                   SizedBox(height: 20.0),
