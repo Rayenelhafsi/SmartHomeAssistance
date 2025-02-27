@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:project/auth_service.dart';
-import 'package:project/signup.dart';
+import 'package:SmartHomeAssistance/auth_service.dart';
+import 'package:SmartHomeAssistance/signup.dart';
 
 class Login extends StatefulWidget {
   @override
