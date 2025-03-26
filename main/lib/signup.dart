@@ -4,6 +4,8 @@ import 'package:SmartHomeAssistance/auth_service.dart'; // Ensure this import is
 
 // ignore: must_be_immutable
 class Signup extends StatefulWidget {
+  const Signup({super.key});
+
   @override
   _SignupState createState() => _SignupState();
 }

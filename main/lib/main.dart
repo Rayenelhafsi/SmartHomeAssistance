@@ -1,3 +1,6 @@
+// import 'package:SmartHomeAssistance/homescreen.dart';
+import 'package:SmartHomeAssistance/homescreen.dart';
+// import 'package:SmartHomeAssistance/room.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +15,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(debugShowCheckedModeBanner: false, home: Home());
@@ -20,6 +25,8 @@ class MyApp extends StatelessWidget {
 
 class Home extends StatelessWidget {
   final AuthService _authService = AuthService();
+
+  Home({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +38,7 @@ class Home extends StatelessWidget {
           if (user == null) {
             return Login();
           } else {
-            return Scaffold(
-              appBar: AppBar(title: Text("Welcome ${user.displayName}")),
-              body: Center(child: Text("You are logged in!")),
-            );
+            return HomeScreen();
           }
         } else {
           return Center(child: CircularProgressIndicator());

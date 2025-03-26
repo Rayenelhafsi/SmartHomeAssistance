@@ -4,6 +4,8 @@ import 'package:SmartHomeAssistance/auth_service.dart';
 import 'package:SmartHomeAssistance/signup.dart';
 
 class Login extends StatefulWidget {
+  const Login({super.key});
+
   @override
   State<Login> createState() => _LoginState();
 }
@@ -35,10 +37,13 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   SizedBox(height: 40),
-                  Image(
-                    image: AssetImage('images/logo-test.png'),
-                    height: 90,
-                    width: 90,
+                  SizedBox(
+                    width: 150,
+                    child: Image(
+                      image: AssetImage('images/smart-home-assistance.png'),
+                      // height: 120,
+                      // width: 120,
+                    ),
                   ),
                   SizedBox(height: 40.0),
                   TextFormField(
@@ -77,6 +82,10 @@ class _LoginState extends State<Login> {
                   SizedBox(height: 25.0),
                   ElevatedButton(
                     onPressed: () async {
+                      setState(() {
+                        // Disable the button to prevent multiple taps
+                        // (You can add a boolean variable to manage this state)
+                      });
                       User? user = await _authService.signInWithGoogle();
                       if (user != null) {
                         print('User signed in: ${user.displayName}');
@@ -84,6 +93,7 @@ class _LoginState extends State<Login> {
                         print('Sign-in failed');
                       }
                     },
+
                     child: Text('Sign in with Google'),
                   ),
                   SizedBox(height: 25.0),
@@ -92,6 +102,10 @@ class _LoginState extends State<Login> {
                     color: Colors.purple,
                     child: MaterialButton(
                       onPressed: () async {
+                        setState(() {
+                          // Disable the button to prevent multiple taps
+                          // (You can add a boolean variable to manage this state)
+                        });
                         User? user = await _authService
                             .signInWithEmailAndPassword(
                               emailController.text,
@@ -103,6 +117,7 @@ class _LoginState extends State<Login> {
                           print('Sign-in failed');
                         }
                       },
+
                       child: Text(
                         'LOGIN',
                         style: TextStyle(color: Colors.white),

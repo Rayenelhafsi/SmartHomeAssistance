@@ -5,8 +5,31 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance; // Define _auth here
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     clientId:
-        '42087615644-rjgial203fibg558d0mch63i0kv7g7vn.apps.googleusercontent.com', // Updated with actual client ID
+        '42087615644-na03b7h93og9ebus9020q0okd3b3iuja.apps.googleusercontent.com', // Updated with actual client ID
   );
+
+  Future<User?> loginwithgoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      if (googleAuth != null) {
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        final UserCredential authResult = await _auth.signInWithCredential(
+          credential,
+        );
+        return authResult.user; // Return the user after successful sign-in
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+    return null;
+  }
 
   Future<User?> signInWithEmailAndPassword(
     String email,
@@ -23,6 +46,7 @@ class AuthService {
   }
 
   Future<void> sendEmailVerification(User user) async {
+    // ignore: unnecessary_null_comparison
     if (user != null) {
       await user.sendEmailVerification();
     }
