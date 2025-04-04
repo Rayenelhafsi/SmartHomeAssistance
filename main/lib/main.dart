@@ -1,6 +1,4 @@
-// import 'package:SmartHomeAssistance/homescreen.dart';
-import 'package:SmartHomeAssistance/homescreen.dart';
-// import 'package:SmartHomeAssistance/room.dart';
+import 'package:SmartHomeAssistance/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,7 +36,7 @@ class Home extends StatelessWidget {
           if (user == null) {
             return Login();
           } else {
-            return HomeScreen();
+            return WelcomeScreen();
           }
         } else {
           return Center(child: CircularProgressIndicator());
@@ -46,4 +44,6 @@ class Home extends StatelessWidget {
       },
     );
   }
+  
+  
 }

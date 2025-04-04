@@ -1,4 +1,7 @@
+import 'package:SmartHomeAssistance/room.dart';
+import 'package:SmartHomeAssistance/users_screen.dart';
 import 'package:flutter/material.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -144,59 +147,75 @@ class RoomCard extends StatelessWidget {
   final String roomName;
   final int deviceCount;
 
-  const RoomCard(
-      {super.key,
-      required this.imageUrl,
-      required this.roomName,
-      required this.deviceCount});
+  const RoomCard({
+    super.key,
+    required this.imageUrl,
+    required this.roomName,
+    required this.deviceCount,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 140, // Small width
-      height: 80, // Small height
-      margin: EdgeInsets.only(right: 12), // Spacing between cards
-      decoration: BoxDecoration(
-        color: Color(0xFF1E1F2F),
-        borderRadius: BorderRadius.circular(12), // Rounded corners
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 5,
-            spreadRadius: 1,
-          ),
-        ],
-        image: DecorationImage(
-          image: NetworkImage(imageUrl),
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.3),
-            BlendMode.darken,
-          ),
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(12), // Compact padding
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              roomName,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14, // Smaller font size
-                fontWeight: FontWeight.bold,
-              ),
+    return GestureDetector(
+      onTap: () {
+        // Navigate to RoomScreen when the card is tapped
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => room(
+              // imageUrl: imageUrl,
+              // roomName: roomName,
+              // deviceCount: deviceCount,
             ),
-            Text(
-              "$deviceCount DEVICES",
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 10, // Smaller font size
-              ),
+          ),
+        );
+      },
+      child: Container(
+        width: 140, // Small width
+        height: 80, // Small height
+        margin: EdgeInsets.only(right: 12), // Spacing between cards
+        decoration: BoxDecoration(
+          color: Color(0xFF1E1F2F),
+          borderRadius: BorderRadius.circular(12), // Rounded corners
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 5,
+              spreadRadius: 1,
             ),
           ],
+          image: DecorationImage(
+            image: NetworkImage(imageUrl),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.3),
+              BlendMode.darken,
+            ),
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(12), // Compact padding
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                roomName,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14, // Smaller font size
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                "$deviceCount DEVICES",
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 10, // Smaller font size
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -242,8 +261,34 @@ class MusicPlayer extends StatelessWidget {
 }
 
 // Bottom Navigation Bar
-class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({super.key});
+class BottomNavBar extends StatefulWidget {
+  @override
+  _BottomNavBarState createState() => _BottomNavBarState();
+}
+
+class _BottomNavBarState extends State<BottomNavBar> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    if (index == 0) {
+      // Navigate to HomeScreen when "HOME" is clicked
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    } else if (index == 1) {
+      // Navigate to UsersScreen when "USERS" is clicked
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => UsersScreen()),
+      );
+    } else {
+      // For SETTINGS tab, just update the selected index (No navigation)
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -251,6 +296,8 @@ class BottomNavBar extends StatelessWidget {
       backgroundColor: Color(0xFF1E1F2F),
       selectedItemColor: Colors.blue,
       unselectedItemColor: Colors.white70,
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: "HOME"),
         BottomNavigationBarItem(icon: Icon(Icons.people), label: "USERS"),

@@ -3,23 +3,52 @@ import 'package:flutter/material.dart';
 
 class room extends StatelessWidget {
   final List<Map<String, dynamic>> devices = [
-    {'name': 'Lamp', 'icon': Icons.lightbulb_outline, 'status': true},
-    {'name': 'AC', 'icon': Icons.ac_unit, 'status': false},
-    {'name': 'Fan', 'icon': Icons.toys, 'status': true},
-    {'name': 'Heater', 'icon': Icons.thermostat_rounded, 'status': false},
-    {'name': 'TV', 'icon': Icons.tv, 'status': true},
-    {'name': 'Speaker', 'icon': Icons.speaker, 'status': false},
+    {
+      'name': 'Lamp',
+      'icon': Icons.lightbulb_outline,
+      'status': true,
+    },
+    {
+      'name': 'AC',
+      'icon': Icons.ac_unit,
+      'status': false,
+    },
+    {
+      'name': 'Fan',
+      'icon': Icons.toys,
+      'status': true,
+    },
+    {
+      'name': 'Heater',
+      'icon': Icons.thermostat_rounded,
+      'status': false,
+    },
+    {
+      'name': 'TV',
+      'icon': Icons.tv,
+      'status': true,
+    },
+    {
+      'name': 'Speaker',
+      'icon': Icons.speaker,
+      'status': false,
+    },
     // You can add more devices here as needed
   ];
-
-  room({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          leading: Icon(Icons.arrow_back, color: Colors.white),
+          leading:IconButton(onPressed: (){
+            Navigator.pop(context);
+          }, 
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white
+            ),
+          ) ,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -34,7 +63,10 @@ class room extends StatelessWidget {
             ],
           ),
           actions: [
-            Icon(Icons.more_horiz_outlined, color: Colors.white),
+            Icon(
+              Icons.more_horiz_outlined,
+              color: Colors.white,
+            ),
             SizedBox(width: 20),
           ],
           backgroundColor: const Color.fromARGB(255, 20, 9, 48),
@@ -94,7 +126,7 @@ class room extends StatelessWidget {
                 ),
               ),
             ),
-            BottomNavBar(),
+           BottomNavBar(),
           ],
         ),
         backgroundColor: Colors.black,
@@ -107,7 +139,7 @@ class room extends StatelessWidget {
 class DeviceCard extends StatelessWidget {
   final Map<String, dynamic> device;
 
-  const DeviceCard({super.key, required this.device});
+  DeviceCard({required this.device});
 
   @override
   Widget build(BuildContext context) {
