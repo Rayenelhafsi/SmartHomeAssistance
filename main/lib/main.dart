@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:SmartHomeAssistance/auth_service.dart';
 import 'firebase_options.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:SmartHomeAssistance/services/database_service.dart';
 import 'package:SmartHomeAssistance/login.dart';
 
 void main() async {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
 
 class Home extends StatelessWidget {
   final AuthService _authService = AuthService();
-  final DatabaseReference _database = FirebaseDatabase.instance.ref();
+  final DatabaseReference _database = DatabaseService.instance.reference;
 
   Home({super.key});
 
@@ -64,7 +65,7 @@ class Home extends StatelessWidget {
                   return Center(child: CircularProgressIndicator());
                 } else if (configSnapshot.hasData &&
                     configSnapshot.data == true) {
-                  return HomeScreen();
+                  return HomeScreen(database: _database, currentUser: user);
                 } else {
                   return WelcomeScreen();
                 }

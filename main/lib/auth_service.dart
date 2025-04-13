@@ -36,6 +36,15 @@ class AuthService {
         credential,
       );
 
+      // Extract username from email (part before @)
+      final email = googleUser.email;
+      final username = email?.split('@').first ?? 'user';
+
+      // Update display name if not set
+      if (userCredential.user?.displayName == null) {
+        await userCredential.user?.updateDisplayName(username);
+      }
+
       return userCredential.user;
     } catch (e) {
       print("Error during Google Sign-In: $e");
@@ -65,11 +74,18 @@ class AuthService {
 
   Future<User?> signUpWithEmailAndPassword(
     String email,
-    String password,
-  ) async {
+    String password, {
+    String? displayName,
+  }) async {
     try {
       final UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
+
+      // Set display name if provided
+      if (displayName != null) {
+        await userCredential.user?.updateDisplayName(displayName);
+      }
+
       return userCredential.user;
     } catch (e) {
       print(e);

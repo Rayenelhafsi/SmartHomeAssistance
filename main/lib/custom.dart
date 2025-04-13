@@ -1,6 +1,7 @@
 import 'package:SmartHomeAssistance/houseconfig.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Custom extends StatefulWidget {
   @override
@@ -21,32 +22,41 @@ class _CustomState extends State<Custom> {
   var ownercontroller = TextEditingController();
   var phonecontroller = TextEditingController();
 
-  void _saveHouseData() {
+  void _saveHouseData() async {
+    String userId =
+        FirebaseAuth.instance.currentUser!.uid; // Get current user ID
     String houseId =
-        _database.child('houses').push().key!; // Generate unique ID
-    _database
-        .child('houses/$houseId')
-        .set({
-          'id': houseId,
-          'houseName': housenamecontroller.text,
-          'address': addresscontroller.text,
-          'owner': ownercontroller.text,
-          'phone': phonecontroller.text,
-        })
-        .then((_) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('House data saved successfully!')),
-          );
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => houseconfig()),
-          );
-        })
-        .catchError((error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to save data: $error')),
-          );
-        });
+        _database.child('houses').push().key!; // Generate unique house ID
+
+    // Save house details in the database
+    await _database.child('houses/$houseId').set({
+      'id': houseId,
+      'houseName': housenamecontroller.text,
+      'address': addresscontroller.text,
+      'owner': ownercontroller.text,
+      'phone': phonecontroller.text,
+      'rooms': {}, // Initialize empty rooms
+      'roomCounters': {
+        'bedroom': 0,
+        'kitchen': 0,
+        'livingRoom': 0,
+        'bathroom': 0,
+      },
+    });
+
+    // Link the house to the user
+    await _database.child('users/$userId').update({'houseId': houseId});
+
+    // Show success message
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('House data saved successfully!')));
+
+    // Redirect to house configuration page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => houseconfig(houseId: houseId)),
+    );
   }
 
   @override

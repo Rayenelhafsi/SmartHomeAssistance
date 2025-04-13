@@ -1,59 +1,44 @@
 import 'package:SmartHomeAssistance/homescreen.dart';
+import 'package:SmartHomeAssistance/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
-class room extends StatelessWidget {
-  final List<Map<String, dynamic>> devices = [
-    {
-      'name': 'Lamp',
-      'icon': Icons.lightbulb_outline,
-      'status': true,
-    },
-    {
-      'name': 'AC',
-      'icon': Icons.ac_unit,
-      'status': false,
-    },
-    {
-      'name': 'Fan',
-      'icon': Icons.toys,
-      'status': true,
-    },
-    {
-      'name': 'Heater',
-      'icon': Icons.thermostat_rounded,
-      'status': false,
-    },
-    {
-      'name': 'TV',
-      'icon': Icons.tv,
-      'status': true,
-    },
-    {
-      'name': 'Speaker',
-      'icon': Icons.speaker,
-      'status': false,
-    },
-    // You can add more devices here as needed
-  ];
+class Room extends StatelessWidget {
+  final String roomName;
+  final int deviceCount;
+  final String imageUrl;
+  final List<Map<String, dynamic>> devices;
+
+  Room({
+    super.key,
+    required this.roomName,
+    required this.deviceCount,
+    required this.imageUrl,
+  }) : devices = [
+         {'name': 'Lamp', 'icon': Icons.lightbulb_outline, 'status': true},
+         {'name': 'AC', 'icon': Icons.ac_unit, 'status': false},
+         {'name': 'Fan', 'icon': Icons.toys, 'status': true},
+         {'name': 'Heater', 'icon': Icons.thermostat_rounded, 'status': false},
+         {'name': 'TV', 'icon': Icons.tv, 'status': true},
+         {'name': 'Speaker', 'icon': Icons.speaker, 'status': false},
+         // You can add more devices here as needed
+       ];
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          leading:IconButton(onPressed: (){
-            Navigator.pop(context);
-          }, 
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white
-            ),
-          ) ,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+          ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Bedroom',
+                roomName,
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                   color: Colors.white,
@@ -63,10 +48,7 @@ class room extends StatelessWidget {
             ],
           ),
           actions: [
-            Icon(
-              Icons.more_horiz_outlined,
-              color: Colors.white,
-            ),
+            Icon(Icons.more_horiz_outlined, color: Colors.white),
             SizedBox(width: 20),
           ],
           backgroundColor: const Color.fromARGB(255, 20, 9, 48),
@@ -77,8 +59,8 @@ class room extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: Stack(
                 children: [
-                  Image.asset(
-                    'images/room.jpg',
+                  Image.network(
+                    imageUrl,
                     fit: BoxFit.fill,
                     width: double.infinity,
                     height: 200,
@@ -126,7 +108,7 @@ class room extends StatelessWidget {
                 ),
               ),
             ),
-           BottomNavBar(),
+            BottomNavBar(),
           ],
         ),
         backgroundColor: Colors.black,
