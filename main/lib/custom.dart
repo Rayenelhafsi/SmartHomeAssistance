@@ -1,19 +1,56 @@
 import 'package:SmartHomeAssistance/houseconfig.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class Custom extends StatefulWidget {
-
   @override
   State<Custom> createState() => _CustomState();
 }
 
 class _CustomState extends State<Custom> {
+  // Initialize the database reference with the correct URL
+  final DatabaseReference _database =
+      FirebaseDatabase.instanceFor(
+        app: FirebaseDatabase.instance.app,
+        databaseURL:
+            'https://auth-firebase-7a66e-default-rtdb.europe-west1.firebasedatabase.app/',
+      ).ref();
+
+  var housenamecontroller = TextEditingController();
+  var addresscontroller = TextEditingController();
+  var ownercontroller = TextEditingController();
+  var phonecontroller = TextEditingController();
+
+  void _saveHouseData() {
+    String houseId =
+        _database.child('houses').push().key!; // Generate unique ID
+    _database
+        .child('houses/$houseId')
+        .set({
+          'id': houseId,
+          'houseName': housenamecontroller.text,
+          'address': addresscontroller.text,
+          'owner': ownercontroller.text,
+          'phone': phonecontroller.text,
+        })
+        .then((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('House data saved successfully!')),
+          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => houseconfig()),
+          );
+        })
+        .catchError((error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to save data: $error')),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var housenamecontroller=TextEditingController();
-    var addresscontroller=TextEditingController();
-    var ownercontroller=TextEditingController();
-    var phonecontroller=TextEditingController();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -103,17 +140,11 @@ class _CustomState extends State<Custom> {
                     ),
                   ),
                   SizedBox(height: 30),
-                  FloatingActionButton(onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => houseconfig()),
-              );
-                      },
-                      child: Text(
-              'CREATE',
-                      ),
-                      ),
-                ], 
+                  FloatingActionButton(
+                    onPressed: _saveHouseData,
+                    child: Text('CREATE'),
+                  ),
+                ],
               ),
             ),
           ),

@@ -1,9 +1,11 @@
 import 'package:SmartHomeAssistance/welcome_screen.dart';
+import 'package:SmartHomeAssistance/homescreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:SmartHomeAssistance/auth_service.dart';
 import 'firebase_options.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:SmartHomeAssistance/login.dart';
 
 void main() async {
@@ -23,8 +25,27 @@ class MyApp extends StatelessWidget {
 
 class Home extends StatelessWidget {
   final AuthService _authService = AuthService();
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
 
   Home({super.key});
+
+  Future<bool> _isHouseConfigComplete(String userId) async {
+    final snapshot = await _database.child('users/$userId/houseId').get();
+    if (snapshot.exists && snapshot.value != null) {
+      String houseId = snapshot.value as String;
+
+      // Send notification with house ID
+      _sendNotification(userId, "Your house ID is $houseId");
+
+      return true;
+    }
+    return false;
+  }
+
+  void _sendNotification(String userId, String message) {
+    // Implement Firebase Cloud Messaging to send notifications
+    print("Notification sent to $userId: $message");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +57,23 @@ class Home extends StatelessWidget {
           if (user == null) {
             return Login();
           } else {
-            return WelcomeScreen();
+            return FutureBuilder<bool>(
+              future: _isHouseConfigComplete(user.uid),
+              builder: (context, configSnapshot) {
+                if (configSnapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (configSnapshot.hasData &&
+                    configSnapshot.data == true) {
+                  return HomeScreen();
+                } else {
+                  return WelcomeScreen();
+                }
+              },
+            );
           }
-        } else {
-          return Center(child: CircularProgressIndicator());
         }
+        return Center(child: CircularProgressIndicator());
       },
     );
   }
-  
-  
 }

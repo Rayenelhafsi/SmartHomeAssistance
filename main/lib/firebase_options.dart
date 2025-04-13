@@ -42,45 +42,58 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyB123FsYcRUJBi5Y1wG5trTwWhgT2Qvntw',
-    appId: '1:42087615644:web:aad714c7ad2900c7187159',
+    appId: '1:42087615644:web:9343fa9ca6b997f5187159',
     messagingSenderId: '42087615644',
     projectId: 'auth-firebase-7a66e',
     authDomain: 'auth-firebase-7a66e.firebaseapp.com',
+    databaseURL: 'https://auth-firebase-7a66e-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'auth-firebase-7a66e.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBjHFIwnf7BO59QglVFmmrBauJko4bUi0E',
-    appId: '1:42087615644:android:093294ff5139c56c187159',
+    appId: '1:42087615644:android:4cb4a130e6c84bf4187159',
     messagingSenderId: '42087615644',
     projectId: 'auth-firebase-7a66e',
+    databaseURL: 'https://auth-firebase-7a66e-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'auth-firebase-7a66e.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAATOFGDXncZbHMCRE-Jr3ObF2laNvPkW4',
-    appId: '1:42087615644:ios:b7b7c51b2f324f6a187159',
+    appId: '1:42087615644:ios:47238d1de54b438b187159',
     messagingSenderId: '42087615644',
     projectId: 'auth-firebase-7a66e',
+    databaseURL: 'https://auth-firebase-7a66e-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'auth-firebase-7a66e.firebasestorage.app',
+    androidClientId: '42087615644-i12n9mmheu0htipid7tt05unjmhbcnbj.apps.googleusercontent.com',
+    iosClientId: '42087615644-b6t8fa2ijpae8mc9jj81rhdvjru8ep2c.apps.googleusercontent.com',
     iosBundleId: 'com.example.project',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyAATOFGDXncZbHMCRE-Jr3ObF2laNvPkW4',
-    appId: '1:42087615644:ios:b7b7c51b2f324f6a187159',
+    appId: '1:42087615644:ios:47238d1de54b438b187159',
     messagingSenderId: '42087615644',
     projectId: 'auth-firebase-7a66e',
+    databaseURL:
+        'https://auth-firebase-7a66e-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'auth-firebase-7a66e.firebasestorage.app',
+    androidClientId:
+        '42087615644-i12n9mmheu0htipid7tt05unjmhbcnbj.apps.googleusercontent.com',
+    iosClientId:
+        '42087615644-b6t8fa2ijpae8mc9jj81rhdvjru8ep2c.apps.googleusercontent.com',
     iosBundleId: 'com.example.project',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyB123FsYcRUJBi5Y1wG5trTwWhgT2Qvntw',
-    appId: '1:42087615644:web:6b125db465030720187159',
+    appId: '1:42087615644:web:1fd42f3306910c99187159',
     messagingSenderId: '42087615644',
     projectId: 'auth-firebase-7a66e',
     authDomain: 'auth-firebase-7a66e.firebaseapp.com',
+    databaseURL: 'https://auth-firebase-7a66e-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'auth-firebase-7a66e.firebasestorage.app',
   );
+
 }

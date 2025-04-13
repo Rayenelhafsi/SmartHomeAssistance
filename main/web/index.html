@@ -31,8 +31,41 @@
 
   <title>project</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
+
+  <!-- Firebase Authentication -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
+
+  <!-- Add other Firebase SDKs as needed -->
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/firebase-messaging-sw.js')
+        .then(function(registration) {
+          console.log('Service Worker registered with scope:', registration.scope);
+        }).catch(function(err) {
+          console.log('Service Worker registration failed:', err);
+        });
+    }
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyB123FsYcRUJBi5Y1wG5trTwWhgT2Qvntw",
+      authDomain: "auth-firebase-7a66e.firebaseapp.com",
+      databaseURL: "https://auth-firebase-7a66e-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "auth-firebase-7a66e",
+      storageBucket: "auth-firebase-7a66e.firebasestorage.app",
+      messagingSenderId: "42087615644",
+      appId: "1:42087615644:web:9343fa9ca6b997f5187159"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    console.log("Firebase initialized:", app);
+  </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "42087615644",
+    "firebase_url": "https://auth-firebase-7a66e-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "auth-firebase-7a66e",
     "storage_bucket": "auth-firebase-7a66e.firebasestorage.app"
   },
@@ -14,12 +15,16 @@
       },
       "oauth_client": [
         {
-          "client_id": "42087615644-rjgial203fibg558d0mch63i0kv7g7vn.apps.googleusercontent.com",
+          "client_id": "42087615644-i12n9mmheu0htipid7tt05unjmhbcnbj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.authfirebase",
-            "certificate_hash": "0d7227f55b27ab31a12d1570780d5ed641050623"
+            "certificate_hash": "30248647db046135e85d25de945df58e03a604bf"
           }
+        },
+        {
+          "client_id": "42087615644-tapdagvk1leb3vc73k9f1b6t0lpasl6b.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
@@ -31,7 +36,11 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "42087615644-na03b7h93og9ebus9020q0okd3b3iuja.apps.googleusercontent.com",
+              "client_id": "42087615644-tapdagvk1leb3vc73k9f1b6t0lpasl6b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "42087615644-b6t8fa2ijpae8mc9jj81rhdvjru8ep2c.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.project"

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:SmartHomeAssistance/auth_service.dart'; // Ensure this import is present
+import 'package:SmartHomeAssistance/auth_service.dart';
+import 'package:SmartHomeAssistance/welcome_screen.dart';
 
 // ignore: must_be_immutable
 class Signup extends StatefulWidget {
@@ -141,7 +142,13 @@ class _SignupState extends State<Signup> {
                             );
                         if (user != null) {
                           print('User registered: ${user.email}');
-                          // Optionally navigate to login or home screen
+                          // Navigate to the login page
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WelcomeScreen(),
+                            ), // Ensure Login is imported
+                          );
                         } else {
                           print('Sign-up failed');
                         }

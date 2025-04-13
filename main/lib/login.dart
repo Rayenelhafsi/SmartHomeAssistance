@@ -41,8 +41,6 @@ class _LoginState extends State<Login> {
                     width: 150,
                     child: Image(
                       image: AssetImage('images/smart-home-assistance.png'),
-                      // height: 120,
-                      // width: 120,
                     ),
                   ),
                   SizedBox(height: 40.0),
@@ -69,7 +67,9 @@ class _LoginState extends State<Login> {
                       labelText: 'Password',
                       prefixIcon: Icon(Icons.lock),
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.remove_red_eye),
+                        icon: Icon(
+                          showpass ? Icons.visibility : Icons.visibility_off,
+                        ),
                         onPressed: () {
                           setState(() {
                             showpass = !showpass;
@@ -82,18 +82,13 @@ class _LoginState extends State<Login> {
                   SizedBox(height: 25.0),
                   ElevatedButton(
                     onPressed: () async {
-                      setState(() {
-                        // Disable the button to prevent multiple taps
-                        // (You can add a boolean variable to manage this state)
-                      });
                       User? user = await _authService.signInWithGoogle();
                       if (user != null) {
                         print('User signed in: ${user.displayName}');
                       } else {
-                        print('Sign-in failed');
+                        print('Google Sign-In failed');
                       }
                     },
-
                     child: Text('Sign in with Google'),
                   ),
                   SizedBox(height: 25.0),
@@ -102,10 +97,6 @@ class _LoginState extends State<Login> {
                     color: Colors.purple,
                     child: MaterialButton(
                       onPressed: () async {
-                        setState(() {
-                          // Disable the button to prevent multiple taps
-                          // (You can add a boolean variable to manage this state)
-                        });
                         User? user = await _authService
                             .signInWithEmailAndPassword(
                               emailController.text,
@@ -114,10 +105,9 @@ class _LoginState extends State<Login> {
                         if (user != null) {
                           print('User signed in: ${user.displayName}');
                         } else {
-                          print('Sign-in failed');
+                          print('Email/Password Sign-In failed');
                         }
                       },
-
                       child: Text(
                         'LOGIN',
                         style: TextStyle(color: Colors.white),
@@ -127,8 +117,12 @@ class _LoginState extends State<Login> {
                   SizedBox(height: 20.0),
                   TextButton(
                     onPressed: () async {
-                      await _authService.resetPassword(emailController.text);
-                      print('Password reset email sent.');
+                      if (emailController.text.isNotEmpty) {
+                        await _authService.resetPassword(emailController.text);
+                        print('Password reset email sent.');
+                      } else {
+                        print('Please enter your email to reset password.');
+                      }
                     },
                     child: Text(
                       'Forgot Password?',
