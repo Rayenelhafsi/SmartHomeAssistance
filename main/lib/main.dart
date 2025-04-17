@@ -1,3 +1,5 @@
+import 'package:SmartHomeAssistance/all_users.dart';
+import 'package:SmartHomeAssistance/settings_screen.dart';
 import 'package:SmartHomeAssistance/welcome_screen.dart';
 import 'package:SmartHomeAssistance/homescreen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +22,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: Home());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Home(),
+      routes: {
+        '/home':
+            (context) => HomeScreen(
+              database: DatabaseService.instance.reference,
+              currentUser: FirebaseAuth.instance.currentUser!,
+            ),
+        '/settings': (context) => SettingsScreen(),
+      },
+    );
   }
 }
 

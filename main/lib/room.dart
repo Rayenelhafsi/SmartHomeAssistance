@@ -2,26 +2,54 @@ import 'package:SmartHomeAssistance/homescreen.dart';
 import 'package:SmartHomeAssistance/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
-class Room extends StatelessWidget {
+class Room extends StatefulWidget {
   final String roomName;
   final int deviceCount;
   final String imageUrl;
-  final List<Map<String, dynamic>> devices;
 
   Room({
     super.key,
     required this.roomName,
     required this.deviceCount,
     required this.imageUrl,
-  }) : devices = [
-         {'name': 'Lamp', 'icon': Icons.lightbulb_outline, 'status': true},
-         {'name': 'AC', 'icon': Icons.ac_unit, 'status': false},
-         {'name': 'Fan', 'icon': Icons.toys, 'status': true},
-         {'name': 'Heater', 'icon': Icons.thermostat_rounded, 'status': false},
-         {'name': 'TV', 'icon': Icons.tv, 'status': true},
-         {'name': 'Speaker', 'icon': Icons.speaker, 'status': false},
-         // You can add more devices here as needed
-       ];
+  });
+
+  @override
+  _RoomState createState() => _RoomState();
+}
+
+class _RoomState extends State<Room> {
+  late final List<Map<String, dynamic>> devices;
+
+  int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    devices = [
+      {'name': 'Lamp', 'icon': Icons.lightbulb_outline, 'status': true},
+      {'name': 'AC', 'icon': Icons.ac_unit, 'status': false},
+      {'name': 'Fan', 'icon': Icons.toys, 'status': true},
+      {'name': 'Heater', 'icon': Icons.thermostat_rounded, 'status': false},
+      {'name': 'TV', 'icon': Icons.tv, 'status': true},
+      {'name': 'Speaker', 'icon': Icons.speaker, 'status': false},
+      // You can add more devices here as needed
+    ];
+  }
+
+  void _onItemTapped(int index) {
+    if (_selectedIndex == index) return;
+    setState(() {
+      _selectedIndex = index;
+    });
+    if (index == 0) {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else if (index == 1) {
+      Navigator.pushReplacementNamed(context, '/all_users');
+    } else if (index == 2) {
+      Navigator.pushReplacementNamed(context, '/settings');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +66,7 @@ class Room extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                roomName,
+                widget.roomName,
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                   color: Colors.white,
@@ -60,7 +88,7 @@ class Room extends StatelessWidget {
               child: Stack(
                 children: [
                   Image.network(
-                    imageUrl,
+                    widget.imageUrl,
                     fit: BoxFit.fill,
                     width: double.infinity,
                     height: 200,
@@ -108,7 +136,10 @@ class Room extends StatelessWidget {
                 ),
               ),
             ),
-            BottomNavBar(),
+            BottomNavBar(
+              selectedIndex: _selectedIndex,
+              onItemTapped: _onItemTapped,
+            ),
           ],
         ),
         backgroundColor: Colors.black,

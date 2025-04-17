@@ -2,6 +2,7 @@ import 'package:SmartHomeAssistance/houseconfig.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:SmartHomeAssistance/services/database_service.dart';
 
 class Custom extends StatefulWidget {
   @override
@@ -10,12 +11,7 @@ class Custom extends StatefulWidget {
 
 class _CustomState extends State<Custom> {
   // Initialize the database reference with the correct URL
-  final DatabaseReference _database =
-      FirebaseDatabase.instanceFor(
-        app: FirebaseDatabase.instance.app,
-        databaseURL:
-            'https://auth-firebase-7a66e-default-rtdb.europe-west1.firebasedatabase.app/',
-      ).ref();
+  final DatabaseReference _database = DatabaseService.instance.reference;
 
   var housenamecontroller = TextEditingController();
   var addresscontroller = TextEditingController();

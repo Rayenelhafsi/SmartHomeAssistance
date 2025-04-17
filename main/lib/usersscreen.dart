@@ -2,8 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'bottom_nav_bar.dart';
 
-class UsersScreen extends StatelessWidget {
+class UsersScreen extends StatefulWidget {
   const UsersScreen({super.key});
+
+  @override
+  _UsersScreenState createState() => _UsersScreenState();
+}
+
+class _UsersScreenState extends State<UsersScreen> {
+  int _selectedIndex = 1;
+
+  void _onItemTapped(int index) {
+    if (_selectedIndex == index) return;
+    setState(() {
+      _selectedIndex = index;
+    });
+    if (index == 0) {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else if (index == 1) {
+      // Already on UsersScreen, do nothing
+    } else if (index == 2) {
+      Navigator.pushReplacementNamed(context, '/settings');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +61,10 @@ class UsersScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
+      ),
     );
   }
 }

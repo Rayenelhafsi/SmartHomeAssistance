@@ -3,6 +3,8 @@ import 'package:SmartHomeAssistance/roomscreen.dart';
 import 'package:SmartHomeAssistance/usersscreen.dart';
 import 'package:SmartHomeAssistance/room.dart';
 import 'package:SmartHomeAssistance/bottom_nav_bar.dart';
+import 'package:SmartHomeAssistance/all_users.dart';
+import 'package:SmartHomeAssistance/settings_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -23,6 +25,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final DatabaseReference _database;
   late final User? _currentUser;
+
+  int _selectedIndex = 0;
+  String? _houseId;
 
   @override
   void initState() {
@@ -70,10 +75,11 @@ class _HomeScreenState extends State<HomeScreen> {
           userName = userData['name'] ?? "User"; // Use name from database
         }
 
-        final houseId = userData['houseId'];
+        _houseId = userData['houseId'];
+        print('Fetched houseId: $_houseId');
 
         // Fetch house data
-        final houseSnapshot = await _database.child('houses/$houseId').get();
+        final houseSnapshot = await _database.child('houses/${_houseId}').get();
         if (houseSnapshot.exists) {
           final houseData = Map<String, dynamic>.from(
             houseSnapshot.value as Map,
@@ -109,7 +115,50 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF0D0F1E), // Dark theme background
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: (index) {
+          if (_selectedIndex == index) return;
+          setState(() {
+            _selectedIndex = index;
+          });
+          if (index == 0) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (context) => HomeScreen(
+                      database: _database,
+                      currentUser: _currentUser,
+                    ),
+              ),
+              (Route<dynamic> route) => false,
+            );
+          } else if (index == 1) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (context) => AllUsersScreen(
+                      homeId: _houseId ?? '',
+                      currentUserName: userName,
+                      currentUserPhone: _currentUser?.phoneNumber ?? '',
+                      currentUserPhotoUrl: _currentUser?.photoURL ?? '',
+                      currentUserIsActive:
+                          true, // Assuming current user is active
+                    ),
+              ),
+              (Route<dynamic> route) => false,
+            );
+          } else if (index == 2) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => SettingsScreen()),
+              (Route<dynamic> route) => false,
+            );
+          }
+        },
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -139,11 +188,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           "Welcome to $houseName",
                           style: TextStyle(color: Colors.white70),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Text(
+                            _currentUser?.phoneNumber ?? '',
+                            style: TextStyle(color: Colors.white70),
+                          ),
+                        ),
                       ],
                     ),
                     CircleAvatar(
                       radius: 22,
-                      backgroundImage: NetworkImage(profileImage),
+                      backgroundImage:
+                          _currentUser?.photoURL != null
+                              ? NetworkImage(_currentUser!.photoURL!)
+                              : AssetImage('images/anonym_icon.jpg')
+                                  as ImageProvider,
                     ),
                   ],
                 ),
