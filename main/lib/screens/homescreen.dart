@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:SmartHomeAssistance/roomscreen.dart';
-import 'package:SmartHomeAssistance/usersscreen.dart';
-import 'package:SmartHomeAssistance/room.dart';
-import 'package:SmartHomeAssistance/bottom_nav_bar.dart';
-import 'package:SmartHomeAssistance/all_users.dart';
-import 'package:SmartHomeAssistance/settings_screen.dart';
+import 'package:SmartHomeAssistance/screens/roomscreen.dart';
+import 'package:SmartHomeAssistance/screens/profile.dart';
+import 'package:SmartHomeAssistance/models/room.dart';
+import 'package:SmartHomeAssistance/widgets/bottom_nav_bar.dart';
+import 'package:SmartHomeAssistance/screens/all_users.dart';
+import 'package:SmartHomeAssistance/screens/settings_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -144,8 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       currentUserName: userName,
                       currentUserPhone: _currentUser?.phoneNumber ?? '',
                       currentUserPhotoUrl: _currentUser?.photoURL ?? '',
-                      currentUserIsActive:
-                          true, // Assuming current user is active
+                      currentUserIsActive: true,
+                      currentUserUid: '', // Assuming current user is active
                     ),
               ),
               (Route<dynamic> route) => false,

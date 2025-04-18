@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:SmartHomeAssistance/auth_service.dart';
-import 'package:SmartHomeAssistance/signup.dart';
+import 'package:SmartHomeAssistance/services/auth_service.dart';
+import 'package:SmartHomeAssistance/screens/signup.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

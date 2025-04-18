@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:SmartHomeAssistance/bottom_nav_bar.dart';
+import 'package:SmartHomeAssistance/widgets/bottom_nav_bar.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});

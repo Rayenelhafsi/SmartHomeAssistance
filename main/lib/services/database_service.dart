@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:SmartHomeAssistance/models/room.dart'; // Assuming room.dart is a model
 
 class DatabaseService {
   static final DatabaseService _instance = DatabaseService._internal();
@@ -11,20 +12,36 @@ class DatabaseService {
   static DatabaseService get instance => _instance;
 
   Future<List<Map<String, dynamic>>> getUsersByHomeId(String homeId) async {
-    final snapshot =
+    final userSnapshot =
         await reference
             .child('users')
             .orderByChild('houseId')
             .equalTo(homeId)
             .get();
-    // Removed debug prints as requested
-    if (snapshot.exists) {
-      final usersMap = Map<String, dynamic>.from(snapshot.value as Map);
-      return usersMap.entries.map((entry) {
+
+    List<Map<String, dynamic>> usersWithPhone = [];
+
+    if (userSnapshot.exists) {
+      final usersMap = Map<String, dynamic>.from(userSnapshot.value as Map);
+      for (var entry in usersMap.entries) {
         final user = Map<String, dynamic>.from(entry.value as Map);
         user['uid'] = entry.key;
-        return user;
-      }).toList();
+
+        // Fetch house data to get the phone number
+        final houseSnapshot =
+            await reference.child('houses').child(user['houseId']).get();
+
+        if (houseSnapshot.exists) {
+          final houseData = Map<String, dynamic>.from(
+            houseSnapshot.value as Map,
+          );
+          user['phone'] =
+              houseData['phone'] ?? ''; // Add phone number to user data
+        }
+
+        usersWithPhone.add(user);
+      }
+      return usersWithPhone;
     } else {
       return [];
     }

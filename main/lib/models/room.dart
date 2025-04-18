@@ -1,5 +1,5 @@
-import 'package:SmartHomeAssistance/homescreen.dart';
-import 'package:SmartHomeAssistance/bottom_nav_bar.dart';
+import 'package:SmartHomeAssistance/screens/homescreen.dart';
+import 'package:SmartHomeAssistance/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class Room extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:SmartHomeAssistance/homescreen.dart';
-import 'package:SmartHomeAssistance/all_users.dart';
+import 'package:SmartHomeAssistance/screens/homescreen.dart';
+import 'package:SmartHomeAssistance/screens/all_users.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:SmartHomeAssistance/settings_screen.dart';
+import 'package:SmartHomeAssistance/screens/settings_screen.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int selectedIndex;

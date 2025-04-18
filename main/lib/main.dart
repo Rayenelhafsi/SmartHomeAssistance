@@ -1,15 +1,15 @@
-import 'package:SmartHomeAssistance/all_users.dart';
-import 'package:SmartHomeAssistance/settings_screen.dart';
-import 'package:SmartHomeAssistance/welcome_screen.dart';
-import 'package:SmartHomeAssistance/homescreen.dart';
+import 'package:SmartHomeAssistance/screens/all_users.dart';
+import 'package:SmartHomeAssistance/screens/settings_screen.dart';
+import 'package:SmartHomeAssistance/screens/welcome_screen.dart';
+import 'package:SmartHomeAssistance/screens/homescreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:SmartHomeAssistance/auth_service.dart';
+import 'package:SmartHomeAssistance/services/auth_service.dart';
 import 'firebase_options.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:SmartHomeAssistance/services/database_service.dart';
-import 'package:SmartHomeAssistance/login.dart';
+import 'package:SmartHomeAssistance/screens/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +32,35 @@ class MyApp extends StatelessWidget {
               currentUser: FirebaseAuth.instance.currentUser!,
             ),
         '/settings': (context) => SettingsScreen(),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == '/all_users') {
+          final user = FirebaseAuth.instance.currentUser;
+          if (user == null) {
+            return MaterialPageRoute(builder: (context) => Login());
+          }
+          // Fetch user details from database or user object
+          // For demonstration, using placeholders or empty strings
+          final homeId = ''; // You may want to fetch this from your database
+          final currentUserUid = user.uid;
+          final currentUserName = user.displayName ?? '';
+          final currentUserPhone = ''; // Fetch from database if available
+          final currentUserPhotoUrl = user.photoURL ?? '';
+          final currentUserIsActive = true; // Set based on your app logic
+
+          return MaterialPageRoute(
+            builder:
+                (context) => AllUsersScreen(
+                  homeId: homeId,
+                  currentUserUid: currentUserUid,
+                  currentUserName: currentUserName,
+                  currentUserPhone: currentUserPhone,
+                  currentUserPhotoUrl: currentUserPhotoUrl,
+                  currentUserIsActive: currentUserIsActive,
+                ),
+          );
+        }
+        return null;
       },
     );
   }

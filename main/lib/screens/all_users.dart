@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'bottom_nav_bar.dart';
+import '../widgets/bottom_nav_bar.dart';
 import 'package:SmartHomeAssistance/services/database_service.dart';
 
 class UserModel {
@@ -10,8 +10,8 @@ class UserModel {
 
   UserModel({
     required this.uid,
-    required this.phone,
     required this.name,
+    required this.phone,
     required this.isActive,
   });
 
@@ -20,13 +20,14 @@ class UserModel {
       uid: map['uid'] ?? '',
       name: map['name'] ?? '',
       phone: map['phone'] ?? '',
-      isActive: map['isActive'] ?? false,
+      isActive: map['isActive'] ?? true,
     );
   }
 }
 
 class AllUsersScreen extends StatefulWidget {
   final String homeId;
+  final String currentUserUid;
   final String currentUserName;
   final String currentUserPhone;
   final String currentUserPhotoUrl;
@@ -34,6 +35,7 @@ class AllUsersScreen extends StatefulWidget {
 
   AllUsersScreen({
     required this.homeId,
+    required this.currentUserUid,
     required this.currentUserName,
     required this.currentUserPhone,
     required this.currentUserPhotoUrl,
@@ -57,12 +59,35 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
   }
 
   Future<void> _fetchUsers() async {
-    print('AllUsersScreen received homeId: ${widget.homeId}');
     final userMaps = await DatabaseService.instance.getUsersByHomeId(
       widget.homeId,
     );
+
+    // Add current user manually to ensure it's not duplicated in the list
+    final currentUser = UserModel(
+      uid: widget.currentUserUid,
+      name: widget.currentUserName,
+      phone: widget.currentUserPhone,
+      isActive: widget.currentUserIsActive,
+    );
+
+    final allUsers = userMaps.map((map) => UserModel.fromMap(map)).toList();
+    allUsers.add(currentUser); // Add current user manually in case not in DB
+
+    // Remove duplicates by UID
+    final uniqueUsers = <String, UserModel>{};
+    for (var user in allUsers) {
+      uniqueUsers[user.uid] = user; // overwrites duplicate uid
+    }
+
+    // Convert map back to list and filter out current user
+    final filtered =
+        uniqueUsers.values
+            .where((user) => user.uid != widget.currentUserUid)
+            .toList();
+
     setState(() {
-      users = userMaps.map((map) => UserModel.fromMap(map)).toList();
+      users = filtered;
       isLoading = false;
     });
   }
@@ -74,8 +99,6 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
     });
     if (index == 0) {
       Navigator.pushReplacementNamed(context, '/home');
-    } else if (index == 1) {
-      // Already on AllUsersScreen, do nothing
     } else if (index == 2) {
       Navigator.pushReplacementNamed(context, '/settings');
     }
@@ -90,7 +113,6 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
               ? Center(child: CircularProgressIndicator())
               : Column(
                 children: [
-                  // Display current user info at top
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Row(
@@ -150,7 +172,6 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
                     ),
                   ),
                   Divider(color: Colors.grey[300]),
-                  // Display other users list
                   Expanded(
                     child:
                         users.isEmpty
@@ -197,7 +218,7 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
             CircleAvatar(
               radius: 25.0,
               child: Text(
-                user.name.isNotEmpty ? user.name[0].toUpperCase() : '',
+                user.name.isNotEmpty ? user.name[0].toUpperCase() : '?',
                 style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
               ),
             ),
@@ -218,18 +239,20 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
         ),
         SizedBox(width: 20.0),
         Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${user.name}',
+              user.name.isNotEmpty ? user.name : 'Unnamed User',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 25.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Text('${user.phone}', style: TextStyle(color: Colors.grey)),
+            Text(
+              user.phone.isNotEmpty ? user.phone : 'No phone number',
+              style: TextStyle(color: Colors.grey),
+            ),
           ],
         ),
       ],

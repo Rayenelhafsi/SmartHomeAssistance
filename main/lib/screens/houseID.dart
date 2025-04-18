@@ -1,4 +1,4 @@
-import 'package:SmartHomeAssistance/homescreen.dart';
+import 'package:SmartHomeAssistance/screens/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';

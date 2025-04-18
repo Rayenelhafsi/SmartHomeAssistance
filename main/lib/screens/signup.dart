@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:SmartHomeAssistance/auth_service.dart';
-import 'package:SmartHomeAssistance/welcome_screen.dart';
+import 'package:SmartHomeAssistance/services/auth_service.dart';
+import 'package:SmartHomeAssistance/screens/welcome_screen.dart';
 
 // ignore: must_be_immutable
 class Signup extends StatefulWidget {
