@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '/widgets/bottom_nav_bar.dart';
+import '../services/database_service.dart';
 
-class UsersScreen extends StatefulWidget {
-  const UsersScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
-  _UsersScreenState createState() => _UsersScreenState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _UsersScreenState extends State<UsersScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   int _selectedIndex = 1;
+
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
+  bool _isLoading = false;
+  String? _feedbackMessage;
 
   void _onItemTapped(int index) {
     if (_selectedIndex == index) return;
@@ -20,44 +27,107 @@ class _UsersScreenState extends State<UsersScreen> {
     if (index == 0) {
       Navigator.pushReplacementNamed(context, '/home');
     } else if (index == 1) {
-      // Already on UsersScreen, do nothing
+      // Already on ProfileScreen, do nothing
     } else if (index == 2) {
       Navigator.pushReplacementNamed(context, '/settings');
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     final user = FirebaseAuth.instance.currentUser;
-
-    String getUsername() {
-      if (user == null) return 'Guest';
-      if (user.displayName != null) return user.displayName!;
-      if (user.email != null) return user.email!.split('@').first;
-      return 'User';
+    if (user != null) {
+      _usernameController.text = user.displayName ?? '';
+      _emailController.text = user.email ?? '';
     }
+  }
 
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _saveProfile() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    setState(() {
+      _isLoading = true;
+      _feedbackMessage = null;
+    });
+
+    try {
+      final profileData = {
+        'displayName': _usernameController.text.trim(),
+        'email': _emailController.text.trim(),
+      };
+      await DatabaseService.instance.updateUserProfile(user.uid, profileData);
+
+      setState(() {
+        _feedbackMessage = 'Profile updated successfully.';
+      });
+    } catch (e) {
+      setState(() {
+        _feedbackMessage = 'Failed to update profile: $e';
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Profile')),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
               radius: 50,
               backgroundImage: AssetImage('images/anonym icon.jpg'),
             ),
             const SizedBox(height: 20),
-            Text(
-              getUsername(),
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            TextField(
+              controller: _usernameController,
+              decoration: const InputDecoration(
+                labelText: 'Username',
+                border: OutlineInputBorder(),
+              ),
             ),
             const SizedBox(height: 10),
-            if (user?.email != null)
-              Text(
-                user!.email!,
-                style: const TextStyle(fontSize: 16, color: Colors.grey),
+            TextField(
+              controller: _emailController,
+              decoration: const InputDecoration(
+                labelText: 'Email',
+                border: OutlineInputBorder(),
               ),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            const SizedBox(height: 20),
+            _isLoading
+                ? const CircularProgressIndicator()
+                : ElevatedButton(
+                  onPressed: _saveProfile,
+                  child: const Text('Save'),
+                ),
+            if (_feedbackMessage != null) ...[
+              const SizedBox(height: 20),
+              Text(
+                _feedbackMessage!,
+                style: TextStyle(
+                  color:
+                      _feedbackMessage!.startsWith('Failed')
+                          ? Colors.red
+                          : Colors.green,
+                ),
+              ),
+            ],
           ],
         ),
       ),

@@ -46,4 +46,11 @@ class DatabaseService {
       return [];
     }
   }
+
+  Future<void> updateUserProfile(
+    String uid,
+    Map<String, dynamic> profileData,
+  ) async {
+    await reference.child('users').child(uid).update(profileData);
+  }
 }

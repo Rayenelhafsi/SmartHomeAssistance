@@ -191,17 +191,17 @@ class ContactUsScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              'Email: support@smarthome.com',
+              'Email: Support@SmartHomeAssistance.tn',
               style: TextStyle(color: Colors.white70, fontSize: 16),
             ),
             SizedBox(height: 10),
             Text(
-              'Phone: +1 234 567 890',
+              'Phone: +216 24 879 087',
               style: TextStyle(color: Colors.white70, fontSize: 16),
             ),
             SizedBox(height: 10),
             Text(
-              'Address: 123 Smart Home St, Tech City, USA',
+              'Address: 104 Rue des Martyrs \nKélibia, Tunisia',
               style: TextStyle(color: Colors.white70, fontSize: 16),
             ),
           ],
